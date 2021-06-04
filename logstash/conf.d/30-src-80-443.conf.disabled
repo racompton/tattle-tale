@@ -1,0 +1,20 @@
+filter {
+
+# Drop everything that does not have a source port of 80 or 443 and a 
+# destination port of 19, 53, 69, 123, 137, or 389
+# This traffic doesn't comply with the UDP RFC and is crafted
+# This greatly reduces the number of records and really should only be used by 
+# a transit ISP or IXP to look for spoofed traffic traversing their network
+# If enabling this filter, then it's suggested to disable the shadowserver filter ( mv 30-shadowserver.conf 30-shadowserver.conf.disabled)
+
+   #if [source][port] != 80 and [source][port] != 443 {
+   if [source][port] == 80 or [source][port] == 443 {
+      if [destination][port] != 19 and [destination][port] != 53 and [destination][port] != 69 and [destination][port] != 137 and [destination][port] != 161 and [destination][port] != 123 and [destination][port] != 389 {
+        drop { }
+      }
+   }
+   else {
+      drop { }
+   }
+
+}
