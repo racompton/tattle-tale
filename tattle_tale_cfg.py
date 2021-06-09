@@ -13,10 +13,21 @@ shadow_url = "https://dl.shadowserver.org/reports/index.php"
 # Must include the trailing /
 shadow_dir = "/opt/tattle_tale/downloads/"
 
-# Temporary directory to store new dictionaries
+# Directory to store new dictionaries
 # Must include the trailing /
 shadow_temp_dir = "/opt/tattle_tale/dicts/"
 
 # Dictionary location for Logstash
 # Must include the trailing /
 logstash_dict_dir = "/etc/logstash/dictionaries/"
+
+# File containing list of IP addresses to query via SNMP
+device_list = "/opt/tattle_tale/router_list.txt"
+
+# SNMPv2c community string
+snmp_community = "<community string>"
+
+# Regular Expression to pull company name from interface description
+# Change to your 
+if_regex = "\[NAME=(.+?)\]"
+
