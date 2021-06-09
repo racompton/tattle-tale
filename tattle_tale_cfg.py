@@ -27,7 +27,8 @@ device_list = "/opt/tattle_tale/router_list.txt"
 # SNMPv2c community string
 snmp_community = "<community string>"
 
-# Regular Expression to pull company name from interface description
-# Change to your 
+# Regular Expression to pull Peer name from interface description
+# Change to match your naming convention
+# BTW, https://regex101.com is really good for testing regex
 if_regex = "\[NAME=(.+?)\]"
 
