@@ -24,10 +24,15 @@ Rename the `netflow.yml.disabled` file to `netflow.yml` in `/etc/filebeat/module
 Enable the filebeat module `sudo filebeat modules enable netflow` 
 
 Edit the `tattle_tale_cfg.py` file and populate these fields:
+
 **These fields will be populated with the email address/password that Shadowserver has assigned to you.  If you don't yet receive Shadowserver reports, you can request them here: https://www.shadowserver.org/contact/
+
 `shadow_user = "<username>"`
+
 `shadow_pass = "<password>"`
+
 **This field is the snmp community string for polling the routers for their interface descriptions
+
 `snmp_community = "<community string>"`
 
 
