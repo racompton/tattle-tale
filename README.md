@@ -51,7 +51,9 @@ Make the ELK stack daemons start at boot:
 `sudo systemctl enable logstash`
 `sudo systemctl enable filebeat`
 
-Open Kibana and click the hamburger button to open up the left side menu.  Click "Stack Management" and then "Index patterns".  Click the "+Create index pattern" button and put in "netflow*".  Specify the primary time field as "@timestamp" from the drop down and press the "Create index pattern" button.
+Open Kibana and click the hamburger button to open up the left side menu.  Click "Stack Management" and then "Index patterns".  
+Click the "+Create index pattern" button and put in "netflow*".  
+Specify the primary time field as "@timestamp" from the drop down and press the "Create index pattern" button.
 
 
 
