@@ -1,4 +1,4 @@
-# tattle-tale
+# Tattle Tale
 A platform using the ELK stack to detect spoofed UDP DDoS amplification request traffic with netflow 
 
 ## Installation instructions
