@@ -2,7 +2,7 @@ actions:
   1:
     action: delete_indices
     description: >-
-      Delete indices older than 45 days (based on index name), for elastiflow-
+      Delete indices older than 45 days (based on index name), for netflow-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
