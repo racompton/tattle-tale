@@ -9,7 +9,19 @@ filter {
 
    #if [source][port] != 80 and [source][port] != 443 {
    if [source][port] == 80 or [source][port] == 443 {
-      if [destination][port] != 19 and [destination][port] != 53 and [destination][port] != 69 and [destination][port] != 137 and [destination][port] != 161 and [destination][port] != 123 and [destination][port] != 389 {
+      if 
+      [destination][port] != 17 and
+      [destination][port] != 19 and 
+      [destination][port] != 53 and 
+      [destination][port] != 69 and 
+      [destination][port] != 111 and
+      [destination][port] != 123 and 
+      [destination][port] != 137 and 
+      [destination][port] != 161 and 
+      [destination][port] != 177 and
+      [destination][port] != 389 and
+      [destination][port] != 520 
+      {
         drop { }
       }
    }
