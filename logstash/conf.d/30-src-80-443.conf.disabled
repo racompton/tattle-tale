@@ -20,7 +20,8 @@ filter {
       [destination][port] != 161 and 
       [destination][port] != 177 and
       [destination][port] != 389 and
-      [destination][port] != 520 
+      [destination][port] != 520 and
+      [destination][port] != 523
       {
         drop { }
       }
