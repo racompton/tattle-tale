@@ -124,6 +124,9 @@ def copy_files(source_dir, dest_dir):
 #
 #
 download_dir = cfg.shadow_dir
+# if this directory doesn't exist, create it
+if not os.path.exists(download_dir):
+    os.makedirs(download_dir)
 session = requests.Session()
 credentials = {'user': cfg.shadow_user, 'password': cfg.shadow_pass, 'login':'Login'}
 response = session.post(cfg.shadow_url, data=credentials)
@@ -140,6 +143,9 @@ for key, value in urls_files.items():
 
 filedir = cfg.shadow_dir
 outdir = cfg.shadow_temp_dir
+# if this directory doesn't exist, create it
+if not os.path.exists(outdir):
+    os.makedirs(outdir)
 logstash_dir = cfg.logstash_dict_dir
 
 # Clean out previous dictionary files
