@@ -6,7 +6,7 @@ WORKDIR /opt/tattle-tail
 COPY requirements.txt ./
 COPY *.py bin/
 
-RUN mkdir -pv /opt/tattle-tail/{var/downloads,lib/logstash,etc,var/tmp}
+RUN mkdir -pv etc lib/logstash var/downloads var/tmp
 
 RUN apt-get update
 RUN apt-get -y install libsmi-dev gcc curl
