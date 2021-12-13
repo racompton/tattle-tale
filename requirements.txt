@@ -1,0 +1,26 @@
+#
+# Output generated via "pipdeptree -f > requirements.txt"
+#
+# Example setup using python3 venv:
+#
+#  python3 -m venv ./venv
+#  source venv/bin/activate
+#  pip install -r requirements.txt
+#
+
+pipdeptree==2.0.0
+  pip==21.1.3
+requests==2.26.0
+  certifi==2021.5.30
+  charset-normalizer==2.0.3
+  idna==3.2
+  urllib3==1.26.6
+snimpy==1.0.0
+  cffi==1.14.6
+    pycparser==2.20
+  pysnmp==4.4.12
+    pyasn1==0.4.8
+    pycryptodomex==3.10.1
+    pysmi==0.3.4
+      ply==3.11
+  setuptools==44.0.0

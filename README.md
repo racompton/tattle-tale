@@ -22,9 +22,9 @@ Copy the files from the `filebeat` directory and put them into `/etc/filebeat`
 
 Copy the file `delete_old_indicies.sh` from the `cron.daily` directory to `/etc/cron.daily` and make the file executable (`chmod 755 /etc/cron.daily/delete_old_indicies.sh`)
 
-Create the `/opt/tattle_tale` directory `sudo mkdir /opt/tattle_tale`
+Create the `/opt/tattle-tale` directory `sudo mkdir /opt/tattle-tale`
 
-Copy the `tattle_shadow.py`, `tattle_snmp_poll.py` and `tattle_tale_cfg.py` files to the `/opt/tattle_tale` directory and make `tattle_shadow.py` and `tattle_snmp_poll.py` executable (`chmod 755 <filename>`)
+Copy the `tattle_shadow.py`, `tattle_snmp_poll.py` and `tattle_tale_cfg.py` files to the `/opt/tattle-tale/bin` directory and make `tattle_shadow.py` and `tattle_snmp_poll.py` executable (`chmod 755 <filename>`)
 
 Rename the `netflow.yml.disabled` file to `netflow.yml` in `/etc/filebeat/modules.d`
 Enable the filebeat module `sudo filebeat modules enable netflow` 
@@ -42,7 +42,7 @@ Edit the `tattle_tale_cfg.py` file and populate these fields:
 `snmp_community = "<community string>"`
 
 
-Create the file `/opt/tattle_tale/router_list.txt` and put in the IPs of routers that will be polled (one router per line). 
+Create the file `/opt/tattle-tale/etc/router_list.txt` and put in the IPs of routers that will be polled (one router per line). 
 
 
 Restart the ELK stack daemons:
