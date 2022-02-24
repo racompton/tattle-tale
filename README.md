@@ -20,7 +20,7 @@ Copy the files from the `elasticsearch` directory and put them into `/etc/elasti
 
 Copy the files from the `filebeat` directory and put them into `/etc/filebeat`
 
-Copy the file `delete_old_indicies.sh` from the `cron.daily` directory to `/etc/cron.daily` and make the file executable (`chmod 755 /etc/cron.daily/delete_old_indicies.sh`)
+Copy the file `delete_old_indices.sh` from the `cron.daily` directory to `/etc/cron.daily` and make the file executable (`chmod 755 /etc/cron.daily/delete_old_indices.sh`)
 
 Create the `/opt/tattle-tale` directory `sudo mkdir /opt/tattle-tale`
 

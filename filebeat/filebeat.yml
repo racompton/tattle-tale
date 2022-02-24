@@ -14,7 +14,7 @@ setup.template.settings:
   index.number_of_shards: 1
 setup.kibana:
 output.logstash:
-  hosts: ["localhost:5044"]
+  hosts: ["logstash:5044"]
 processors:
   - add_host_metadata:
       when.not.contains.tags: forwarded

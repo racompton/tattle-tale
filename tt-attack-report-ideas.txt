@@ -1,0 +1,186 @@
+When TT identifies a "malicious sender" (an IP targeting a known reflector/amp):
+
+TT can identify:
+   Src IP/port (may be forged) coming from an external IP
+   Dest IP/port
+
+Current upload logic: If IP A is seen more than X times connecting to discreet IPs
+(with a known-suspect dest port/protocol), than it's considered a potentially malicious
+true-positive attack
+
+Counters set back to zero. (keyed off of source IP)
+
+Source IP: Unique count
+
+Add "first observation" + "most recent observation" time:
+
+{
+  "_index": "tattle_tale",
+  "_type": "_doc",
+  "_id": "Y7MiQXsBSPFZEKNFxyww",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "@timestamp": "2021-08-13T20:09:02.000Z",
+    "flow_id": "FYUhQXsBg1TcSTBF4KEJ",
+    "src_autonomous_system": 3320,
+    "src_addr": "87.156.23.151",
+    "input_ifname": "SERVERHUB",
+    "dst_asn": 11351,
+    "dst_port": 53,
+    "uniq_dst_ip": 10, (count)
+    "reporter": "Misslie Command Test"
+  },
+  "fields": {
+    "@timestamp": [
+      "2021-08-13T20:09:02.000Z"
+    ]
+  },
+  "sort": [
+    1628885342000
+  ]
+}
+
+
+{
+  "_index": "netflow-2021.08.13",
+  "_type": "_doc",
+  "_id": "F4QoQHsBg1TcSTBFxtI9",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "fileset": {
+      "name": "log"
+    },
+    "@timestamp": "2021-08-13T15:36:56.000Z",
+    "related": {
+      "ip": [
+        "91.151.88.110",
+        "98.7.235.26"
+      ]
+    },
+    "service": {
+      "type": "netflow"
+    },
+    "@version": "1",
+    "observer": {
+**     "ip": "66.109.2.23"
+    },
+    "destination": {
+      "port": 3283,
+      "locality": "external",
+      "hostname": "cpe-98-7-235-26.nyc.res.rr.com",
+      "ip": "98.7.235.26"
+    },
+    "input": {
+      "type": "netflow"
+    },
+    "netflow.dst_service_type": "residential",
+    "source": {
+      "bytes": 32,
+      "hostname": "91.151.88.110",
+      "packets": 1,
+      "ip": "91.151.88.110",
+      "port": 7777,
+      "locality": "external"
+    },
+    "event": {
+      "type": [
+        "connection"
+      ],
+      "created": "2021-08-13T15:36:58.756Z",
+      "module": "netflow",
+      "dataset": "netflow.log",
+      "kind": "event",
+      "category": [
+        "network_traffic",
+        "network"
+      ],
+      "action": "netflow_flow"
+    },
+    "flow": {
+      "id": "H0p-KzJ9Xmc",
+      "locality": "external"
+    },
+    "network": {
+      "bytes": 32,
+      "transport": "udp",
+      "community_id": "1:+1KOHYUJfURGJIsePxTRD9RmPwU=",
+      "packets": 1,
+      "direction": "unknown",
+      "iana_number": 17
+    },
+    "netflow": {
+      "flow_end_milliseconds": "2021-08-13T15:35:56.994Z",
+      "ip_class_of_service": 0,
+      "bgp_source_as_number": 212219,
+      "flow_end_sys_up_time": 3343527042,
+      "destination_ipv4_prefix_length": 18,
+      "type": "netflow_flow",
+      "packet_delta_count": 1,
+      "destination_ipv4_address": "98.7.235.26",
+**    "ingress_interface": 979,
+      "source_ipv4_address": "91.151.88.110",
+      "open_udp": "ard",
+      "tcp_control_bits": 0,
+      "octet_delta_count": 32,
+      "flow_start_milliseconds": "2021-08-13T15:35:56.994Z",
+      "bgp_destination_as_number": 12271,
+      "flow_start_sys_up_time": 3343527042,
+      "icmp_type_code_ipv4": 0,
+      "ip_version": 4,
+      "egress_interface": 1316,
+      "input_ifname": "SERVERHUB",
+      "bgp_next_hop_ipv4_address": "66.109.2.246",
+      "ingress_interface_type": 1,
+      "source_transport_port": 7777,
+      "exporter": {
+        "uptime_millis": 0,
+        "source_id": 60,
+        "address": "66.109.2.23:33092",
+        "version": 10,
+        "timestamp": "2021-08-13T15:36:56.000Z"
+      },
+      "source_ipv4_prefix_length": 24,
+      "destination_transport_port": 3283,
+      "ip_next_hop_ipv4_address": "66.109.5.120",
+      "protocol_identifier": 17
+    },
+    "ecs": {
+      "version": "1.9.0"
+    },
+    "agent": {
+      "type": "filebeat",
+      "ephemeral_id": "d45604c6-26a1-4c61-9e11-c33193739caf",
+      "name": "netflow-storage.nsa.ctec.charterlab.com",
+      "hostname": "netflow-storage.nsa.ctec.charterlab.com",
+      "id": "46083867-69a3-434c-aa9f-93e782846006",
+      "version": "7.13.3"
+    },
+    "tags": [
+      "forwarded",
+      "beats_input_raw_event"
+    ]
+  },
+  "fields": {
+    "netflow.flow_start_milliseconds": [
+      "2021-08-13T15:35:56.994Z"
+    ],
+    "@timestamp": [
+      "2021-08-13T15:36:56.000Z"
+    ],
+    "event.created": [
+      "2021-08-13T15:36:58.756Z"
+    ],
+    "netflow.exporter.timestamp": [
+      "2021-08-13T15:36:56.000Z"
+    ],
+    "netflow.flow_end_milliseconds": [
+      "2021-08-13T15:35:56.994Z"
+    ]
+  },
+  "sort": [
+    1628869016000
+  ]
+}
+
