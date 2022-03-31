@@ -96,7 +96,7 @@ def parse_data():
         file_list = os.scandir(filedir)
         for files in file_list:
                 #print(files.name)
-                if files.name.startswith("scan"):
+                if files.name.startswith("scan_"):
                         #print("Started with scan", files.name)
                         service_name = re.search("scan_(.+?)-charter_communications", files.name)
                 else:
