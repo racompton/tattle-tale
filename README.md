@@ -14,7 +14,7 @@ Copy the files from the `logstash` directory and put them into `/etc/logstash`
 
 Copy the files from the `kibana` directory and put them into `/etc/kibana`
 
-Edit the kibana.yml file and put in the <hostname>
+Edit the kibana.yml file and put in the `<hostname>`
   
 Copy the files from the `elasticsearch` directory and put them into `/etc/elasticsearch`
 
