@@ -1,41 +1,35 @@
 #!/usr/bin/env python3
 
+import os
+
 # Username for Shadowserver authentication
-# TODO: Make envvar
-shadow_user = "<username>"
+shadow_user = os.getenv("TT_SHADOW_USER")
 
 # Password for Shadowserver authentication
-# TODO: Make envvar
-shadow_pass = "<password>"
+shadow_pass = os.getenv("TT_SHADOW_PASS")
 
 # URL for Shadowserver download list
-shadow_url = "https://dl.shadowserver.org/reports/index.php"
+shadow_url = os.getenv("TT_SHADOW_REPORT_URL", default="https://dl.shadowserver.org/reports/index.php")
 
 # Directory to store Shadowserver downloads
 # Must include the trailing /
-shadow_dir = "/opt/tattle-tale/var/downloads/"
+shadow_dir = os.getenv("TT_SHADOW_REPORT_DOWNLOAD_DIR", default="/opt/tattle-tale/var/downloads/")
 
 # Directory to store new dictionaries
 # Must include the trailing /
-shadow_temp_dir = "/opt/tattle-tale/var/tmp/"
+shadow_temp_dir = os.getenv("TT_SHADOW_REPORT_TEMP_DIR", default="/opt/tattle-tale/var/tmp/")
 
 # Dictionary location for Logstash
 # Must include the trailing /
-logstash_dict_dir = "/opt/tattle-tale/lib/logstash/"
+logstash_dict_dir = os.getenv("TT_SHADOW_REPORT_DICT_DIR", default="/opt/tattle-tale/lib/logstash/")
 
 # File containing list of IP addresses to query via SNMP
-# TODO: Make envvar pointing to host file
-# Can be config variable?
-# Potentially support run-time modification?
-device_list = "/opt/tattle-tale/etc/router-list.txt"
+# TODO: Potentially support run-time modification?
+device_list = os.getenv("TT_ROUTER_LIST_FILE", default="/opt/tattle-tale/lib/router-list.txt")
 
 # SNMPv2c community string
-# TODO: Make envvar
-snmp_community = "<community string>"
+snmp_community = os.getenv("TT_SNMP_COMMUNITY_STRING")
 
 # Regular Expression to pull Peer name from interface description
-# Change to match your naming convention
-# BTW, https://regex101.com is really good for testing regex
-# TODO: Make envvar
-if_regex = "\[NAME=(.+?)\]"
+if_regex = os.getenv("TT_INT_DESCRIPTION_PEER_NAME_REGEX")
 
