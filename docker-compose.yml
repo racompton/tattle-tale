@@ -16,7 +16,31 @@ services:
     build:
       context: filebeat/
     ports:
-      - "2055:2055/udp"
+      # Replace 0.0.0.0 with the IP of the interface receiving netflow
+      - "0.0.0.0:2055:2055/udp"
+    depends_on:
+      - logstash
+
+  logstash:
+    build:
+      context: logstash/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
 
   elasticsearch:
     build:
@@ -40,27 +64,6 @@ services:
     networks:
       - elk
 
-  logstash:
-    build:
-      context: logstash/
-      args:
-        ELK_VERSION: $ELK_VERSION
-    volumes:
-      - type: bind
-        source: ./logstash/config/logstash.yml
-        target: /usr/share/logstash/config/logstash.yml
-        read_only: true
-      - type: bind
-        source: ./logstash/pipeline
-        target: /usr/share/logstash/pipeline
-        read_only: true
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
   kibana:
     build:
       context: kibana/
@@ -72,7 +75,8 @@ services:
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
     ports:
-      - "5601:5601"
+      # Replace 0.0.0.0 with the IP address you want the web interface to run on
+      - "0.0.0.0:5601:5601"
     networks:
       - elk
     depends_on:

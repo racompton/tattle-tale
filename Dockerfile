@@ -24,3 +24,4 @@ COPY curator/curator.yml curator/delete_old_indices.yml etc/
 COPY requirements.txt ./
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 
+CMD /opt/tattle-tale/bin/tattle_shadow.py
