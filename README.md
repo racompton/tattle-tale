@@ -61,6 +61,6 @@ Open Kibana and click the hamburger button to open up the left side menu.  Click
 Click the "+Create index pattern" button and put in "netflow*".  
 Specify the primary time field as "@timestamp" from the drop down and press the "Create index pattern" button.
 
-
+Optional step to create a dictionary file from the dissarm.net data: uncomment out the `get-dissarm-ips.py` line in the `tattle_tale_shadow.sh` cron.daily script and then add in the API key and Org ID. 
 
 
