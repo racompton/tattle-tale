@@ -1,6 +1,36 @@
-version: '3.2'
+version: '3.7'
+
+networks:
+  tattle-tale:
+    driver: bridge
+
+volumes:
+  setup:
+  elasticsearch:
 
 services:
+  setup:
+    # The 'setup' service runs a one-off script which initializes the
+    # 'logstash_internal' and 'kibana_system' users inside Elasticsearch with the
+    # values of the passwords defined in the '.env' file.
+    #
+    # This task is only performed during the *initial* startup of the stack. On all
+    # subsequent runs, the service simply returns immediately, without performing
+    # any modification to existing users.
+    build:
+      context: setup/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - setup:/state:Z
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+    networks:
+      - tattle-tale
+
   tattle-tale:
     build:
       context: ./
@@ -10,14 +40,25 @@ services:
       TT_SNMP_COMMUNITY_STRING:
         # Change to match your naming convention
         # BTW, https://regex101.com is really good for testing regex
-      TT_INT_DESCRIPTION_PEER_NAME_REGEX: "\[NAME=(.+?)\]"
+      TT_INT_DESCRIPTION_PEER_NAME_REGEX: '\[NAME=(.+?)\]'
+    volumes:
+      - type: bind
+        source: ./lib
+        target: /opt/tattle-tale/lib/
+        read_only: false
+    networks:
+      - tattle-tale
 
   filebeat:
     build:
       context: filebeat/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
     ports:
       # Replace 0.0.0.0 with the IP of the interface receiving netflow
       - "0.0.0.0:2055:2055/udp"
+    networks:
+      - tattle-tale
     depends_on:
       - logstash
 
@@ -25,20 +66,21 @@ services:
     build:
       context: logstash/
       args:
-        ELK_VERSION: $ELK_VERSION
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - type: bind
-        source: ./logstash/config/logstash.yml
-        target: /usr/share/logstash/config/logstash.yml
-        read_only: true
-      - type: bind
-        source: ./logstash/pipeline
-        target: /usr/share/logstash/pipeline
-        read_only: true
+       - type: bind
+         source: ./logstash/pipeline
+         target: /usr/share/logstash/pipeline
+         read_only: true
+       - type: bind
+         source: ./lib
+         target: /opt/tattle-tale/lib/
+         read_only: true
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: -Xmx256m -Xms256m
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
     networks:
-      - elk
+      - tattle-tale
     depends_on:
       - elasticsearch
 
@@ -46,46 +88,34 @@ services:
     build:
       context: elasticsearch/
       args:
-        ELK_VERSION: 8.0.0
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - type: bind
-        source: ./elasticsearch/config/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
       - type: volume
         source: elasticsearch
         target: /usr/share/elasticsearch/data
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
+      ES_JAVA_OPTS: -Xmx256m -Xms256m
+      # Bootstrap password.
+      # Used to initialize the keystore during the initial startup of
+      # Elasticsearch. Ignored on subsequent runs.
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       # Use single node discovery in order to disable production mode and avoid bootstrap checks.
       # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
     networks:
-      - elk
+      - tattle-tale
 
   kibana:
     build:
       context: kibana/
       args:
-        ELK_VERSION: $ELK_VERSION
-    volumes:
-      - type: bind
-        source: ./kibana/config/kibana.yml
-        target: /usr/share/kibana/config/kibana.yml
-        read_only: true
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
     ports:
       # Replace 0.0.0.0 with the IP address you want the web interface to run on
       - "0.0.0.0:5601:5601"
+    environment:
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
     networks:
-      - elk
+      - tattle-tale
     depends_on:
       - elasticsearch
-
-networks:
-  elk:
-    driver: bridge
-
-volumes:
-  elasticsearch:
-

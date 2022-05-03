@@ -1,4 +1,6 @@
-FROM docker.elastic.co/beats/filebeat:8.0.0
+ARG ELASTIC_VERSION
+
+FROM docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
 
 RUN mv modules.d/netflow.yml.disabled modules.d/netflow.yml
 RUN filebeat modules enable netflow
