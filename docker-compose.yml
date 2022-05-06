@@ -35,16 +35,16 @@ services:
     build:
       context: ./
     environment:
-      TT_SHADOW_USER:
-      TT_SHADOW_PASS:
-      TT_SNMP_COMMUNITY_STRING:
+      TT_SHADOW_USER: BLAH
+      TT_SHADOW_PASS: BLAH
+      TT_SNMP_COMMUNITY_STRING: BLAH
         # Change to match your naming convention
         # BTW, https://regex101.com is really good for testing regex
       TT_INT_DESCRIPTION_PEER_NAME_REGEX: '\[NAME=(.+?)\]'
     volumes:
       - type: bind
-        source: ./lib
-        target: /opt/tattle-tale/lib/
+        source: ${TT_HOST_LIB_DIRECTORY}
+        target: /opt/tattle-tale/lib
         read_only: false
     networks:
       - tattle-tale
@@ -73,8 +73,8 @@ services:
          target: /usr/share/logstash/pipeline
          read_only: true
        - type: bind
-         source: ./lib
-         target: /opt/tattle-tale/lib/
+         source: ${TT_HOST_LIB_DIRECTORY}/logstash
+         target: /usr/share/logstash/tattle-tale
          read_only: true
     environment:
       LS_JAVA_OPTS: -Xmx256m -Xms256m

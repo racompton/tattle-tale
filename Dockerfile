@@ -2,13 +2,11 @@
 FROM python:3.6-slim
 
 WORKDIR /opt/tattle-tale
+RUN mkdir -pv bin etc lib/logstash var/downloads var/tmp
 
 COPY requirements.txt ./
 COPY *.py bin/
-
 RUN chmod +x bin/*
-
-RUN mkdir -pv etc lib/logstash var/downloads var/tmp
 
 COPY cron.daily/delete_old_indices.sh cron.daily/tattle_tale_shadow.sh /etc/cron.daily/
 RUN chmod +x /etc/cron.daily/delete_old_indices.sh /etc/cron.daily/tattle_tale_shadow.sh
