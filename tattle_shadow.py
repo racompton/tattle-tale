@@ -130,6 +130,9 @@ if not os.path.exists(download_dir):
 session = requests.Session()
 credentials = {'user': cfg.shadow_user, 'password': cfg.shadow_pass, 'login':'Login'}
 response = session.post(cfg.shadow_url, data=credentials)
+print(f"Got response downloading ShadowServer report: {response.text} (status code {response.status_code})")
+if response.status_code != 200:
+        sys.exit(1)
 yester_day_month = find_yesterday()
 urls_files = find_links(yester_day_month[0], yester_day_month[1], response.text)
 

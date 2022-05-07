@@ -43,7 +43,9 @@ services:
       TT_INT_DESCRIPTION_PEER_NAME_REGEX: '\[NAME=(.+?)\]'
     volumes:
       - type: bind
-        source: ${TT_HOST_LIB_DIRECTORY}
+        # This lib directory must also be mapped to logstash's /usr/share/logstash/tattle-tale
+#        source: ${TT_HOST_LIB_DIRECTORY}
+        source: ./lib
         target: /opt/tattle-tale/lib
         read_only: false
     networks:
@@ -73,7 +75,9 @@ services:
          target: /usr/share/logstash/pipeline
          read_only: true
        - type: bind
-         source: ${TT_HOST_LIB_DIRECTORY}/logstash
+         # This directory must be mapped to TattleTale's /opt/tattle-tale/lib/logstash directory
+#         source: ${TT_HOST_LIB_DIRECTORY}/logstash
+         source: ./lib/logstash
          target: /usr/share/logstash/tattle-tale
          read_only: true
     environment:
