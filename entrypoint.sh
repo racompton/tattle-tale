@@ -8,9 +8,7 @@ echo "Completed processing ShadowServer report (return code $?)."
 
 # TODO: Fetch IP report from DIS
 
-cron
 echo "TattleTale status at $(date): STARTED"
-tail -f /var/log/cron.log
-# Perform any cleanup here
+cron -f
 
 echo "exited $0"
