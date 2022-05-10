@@ -61,14 +61,14 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - type: bind
-        source: ./logstash/pipeline
         target: /usr/share/logstash/pipeline
+        source: ./logstash/pipeline
         read_only: true
       - type: bind
         # This directory must be mapped to TattleTale's /opt/tattle-tale/lib/logstash directory
         #         source: ${TT_HOST_LIB_DIRECTORY}/logstash
-        source: ./lib/logstash
         target: /usr/share/logstash/tattle-tale
+        source: ./lib/logstash
         read_only: true
     environment:
       LS_JAVA_OPTS: -Xmx256m -Xms256m
@@ -101,7 +101,7 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     ports:
       # Replace 0.0.0.0 with the IP of the interface receiving netflow
-      - "0.0.0.0:2055:2055/udp"
+      - 0.0.0.0:2055:2055/udp
     networks:
       - tattle-tale
     depends_on:

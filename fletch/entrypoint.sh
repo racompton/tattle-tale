@@ -2,6 +2,8 @@
 
 set -eu
 
+echo "TattleTale status at $(date): STARTING..."
+
 echo "Fetching current ShadowServer report..."
 /opt/tattle-tale/bin/tattle_shadow.py
 echo "Completed processing ShadowServer report (return code $?)."
