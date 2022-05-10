@@ -22,10 +22,15 @@ RUN chmod +x bin/*
 # RUN dpkg -i filebeat-7.13.4-amd64.deb ; rm filebeat-7.13.4-amd64.deb
 
 # Setup cron to run the update scripts
-COPY cron.daily/* /etc/cron.daily/
+COPY cron/cron.daily/* /etc/cron.daily/
 RUN chmod +x /etc/cron.daily/*
-COPY cron.hourly/* /etc/cron.hourly/
+
+COPY cron/cron.hourly/* /etc/cron.hourly/
 RUN chmod +x /etc/cron.hourly/*
-RUN touch /var/log/cron.log
+
+RUN mkdir /etc/cron.minutely
+
+COPY cron/crontab /etc/crontab
+RUN crontab /etc/crontab
 
 CMD /opt/tattle-tale/bin/entrypoint.sh

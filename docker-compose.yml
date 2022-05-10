@@ -17,6 +17,8 @@ services:
     # This task is only performed during the *initial* startup of the stack. On all
     # subsequent runs, the service simply returns immediately, without performing
     # any modification to existing users.
+    #
+    # See https://github.com/deviantony/docker-elk#setting-up-user-authentication
     build:
       context: setup/
       args:
@@ -105,9 +107,10 @@ services:
     depends_on:
       - logstash
 
-  tattle-tale:
+  fletch:
+    # Fetches and flushes things
     build:
-      context: ./
+      context: fletch/
     environment:
       TT_SHADOW_USER: BLAH
       TT_SHADOW_PASS: BLAH

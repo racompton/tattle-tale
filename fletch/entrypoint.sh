@@ -7,8 +7,11 @@ echo "Fetching current ShadowServer report..."
 echo "Completed processing ShadowServer report (return code $?)."
 
 # TODO: Fetch IP report from DIS
+echo "Cron schedule:"
+crontab -l
 
 echo "TattleTale status at $(date): STARTED"
-cron -f
+echo "Starting cron..."
+cron -f -L 8
 
 echo "exited $0"
