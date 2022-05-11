@@ -9,7 +9,8 @@
       "names": [
         "logs-generic-default",
         "logstash-*",
-        "ecs-logstash-*"
+        "ecs-logstash-*",
+        "netflow-*"
       ],
       "privileges": [
         "write",
