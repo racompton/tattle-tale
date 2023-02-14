@@ -1,0 +1,4 @@
+[api]
+key = 123456798
+secret = MySecret
+uri = https://transform.shadowserver.org/api2/
