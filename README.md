@@ -24,20 +24,14 @@ Copy the file `delete_old_indices.sh` from the `cron.daily` directory to `/etc/c
 
 Create the `/opt/tattle_tale` directory `sudo mkdir /opt/tattle_tale`
 
-Copy the `tattle_shadow.py`, `tattle_snmp_poll.py` and `tattle_tale_cfg.py` files to the `/opt/tattle_tale` directory and make `tattle_shadow.py` and `tattle_snmp_poll.py` executable (`chmod 755 <filename>`)
+Copy the `download-shadowserver-reports.py`, `call-api.py`, `.shadowserver.api`, `tattle_snmp_poll.py` and `tattle_tale_cfg.py` files to the `/opt/tattle_tale` directory and make `tattle_shadow.py` and `tattle_snmp_poll.py` executable (`chmod 755 <filename>`)
+
+Edit the `.shadowserver.api` file to add in the credentials provided by Shadowserver.  If you don't yet receive Shadowserver reports, you can request credintials here: https://www.shadowserver.org/contact/
 
 Rename the `netflow.yml.disabled` file to `netflow.yml` in `/etc/filebeat/modules.d`
 Enable the filebeat module `sudo filebeat modules enable netflow` 
 
-Edit the `tattle_tale_cfg.py` file and populate these fields:
-
-**These fields will be populated with the email address/password that Shadowserver has assigned to you.  If you don't yet receive Shadowserver reports, you can request them here: https://www.shadowserver.org/contact/
-
-`shadow_user = "<username>"`
-
-`shadow_pass = "<password>"`
-
-**This field is the snmp community string for polling the routers for their interface descriptions
+Edit the `tattle_tale_cfg.py` file and populate this field is the snmp community string for polling the routers for their interface descriptions
 
 `snmp_community = "<community string>"`
 
