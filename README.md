@@ -22,9 +22,9 @@ Copy the files from the `filebeat` directory and put them into `/etc/filebeat`
 
 Copy the file `delete_old_indices.sh` from the `cron.daily` directory to `/etc/cron.daily` and make the file executable (`chmod 755 /etc/cron.daily/delete_old_indices.sh`)
 
-Create the `/opt/tattle_tale` directory `sudo mkdir /opt/tattle_tale`
+Create the `/opt/tattle-tale` directory `sudo mkdir /opt/tattle-tale`
 
-Copy the `download-shadowserver-reports.py`, `call-api.py`, `.shadowserver.api`, `tattle_snmp_poll.py` and `tattle_tale_cfg.py` files to the `/opt/tattle_tale` directory and make `tattle_shadow.py` and `tattle_snmp_poll.py` executable (`chmod 755 <filename>`)
+Copy the `download-shadowserver-reports.py`, `call-api.py`, `.shadowserver.api`, `tattle_snmp_poll.py` and `tattle_tale_cfg.py` files to the `/opt/tattle-tale` directory and make `tattle_shadow.py` and `tattle_snmp_poll.py` executable (`chmod 755 <filename>`)
 
 Edit the `.shadowserver.api` file to add in the credentials provided by Shadowserver.  If you don't yet receive Shadowserver reports, you can request credintials here: https://www.shadowserver.org/contact/
 
@@ -36,7 +36,7 @@ Edit the `tattle_tale_cfg.py` file and populate this field is the snmp community
 `snmp_community = "<community string>"`
 
 
-Create the file `/opt/tattle_tale/router_list.txt` and put in the IPs of routers that will be polled (one router per line). 
+Create the file `/opt/tattle-tale/router_list.txt` and put in the IPs of routers that will be polled (one router per line). 
 
 
 Restart the ELK stack daemons:
