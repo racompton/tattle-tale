@@ -1,10 +1,14 @@
 # Tattle Tale
-A platform using the ELK stack to detect spoofed UDP DDoS amplification request traffic with netflow 
+A platform using the ELK stack to detect spoofed DDoS amplification request traffic with netflow to help perform traceback.  With Tattle Tale you can see which peers are sending you spoofed traffic and see which IPs in your network are receiving the most spoofed traffic.  You can also use it to determine if any hosts in your network are generating spoofed DDoS amplification request traffic.
+
+Tattle Tale can scale horizontally to accomidate the largest networks in the world.  This is accomplished by adding additonal hosts that have Filebeat and Logstash.
+
+Tattle Tale does not have very high requirements for disk storage or RAM (1TB/64GB should be fine) but Filebeat and Logstash are CPU hungry.  
 
 ## Installation instructions
 Follow the install guide for installing Elasticsearch, Logstash, Kibana, and Filebeat.  Instructions can be found here: https://www.elastic.co/guide/en/elastic-stack/current/installing-elastic-stack.html
 
-Install curator (also from Elastic).  Instructions can be found here: https://www.elastic.co/guide/en/elasticsearch/client/curator/current/installation.html
+Install curator (also from Elastic).  Curator will remove entries from the elasticsearch database based on various rules (i.e. they are older than X months) Instructions can be found here: https://www.elastic.co/guide/en/elasticsearch/client/curator/current/installation.html
 
 Clone this github repository `git clone https://github.com/racompton/tattle-tale/`
 
