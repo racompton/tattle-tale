@@ -48,8 +48,7 @@ def make_dicts(dir,logstash_dir):
     for filename in os.listdir(dir):
        if filename.endswith('.csv'):
            # Do regex on filename
-           #service_name = re.search("_(.+?)-charter_communications", filename)
-           service_name = re.search("\d+-\d+-\d+[_-](.+?)-charter_communications", filename)
+           service_name = re.search("\d+-\d+-\d+[_-](.+?)-", filename)
            # open the CSV file
            # print('Opening '+dir+filename)
            # read the CSV file using Pandas
