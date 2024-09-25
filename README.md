@@ -35,7 +35,7 @@ Edit the `.shadowserver.api` file to add in the credentials provided by Shadowse
 Rename the `netflow.yml.disabled` file to `netflow.yml` in `/etc/filebeat/modules.d`
 Enable the filebeat module `sudo filebeat modules enable netflow` 
 
-Edit the `tattle_tale_cfg.py` file and populate this field is the snmp community string for polling the routers for their interface descriptions
+Edit the `tattle_tale_cfg.py` file and populate.  This field is the snmp community string for polling the routers to get their interface descriptions and SNMP index numbers.
 
 `snmp_community = "<community string>"`
 
