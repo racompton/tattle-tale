@@ -59,6 +59,6 @@ Open Kibana and click the hamburger button to open up the left side menu.  Click
 Click the "+Create index pattern" button and put in "netflow*".  
 Specify the primary time field as "@timestamp" from the drop down and press the "Create index pattern" button.
 
-Optional step to create a dictionary file from the dissarm.net data: uncomment out the `get-dissarm-ips.py` line in the `tattle_tale_shadow.sh` cron.daily script and then add in the API key and Org ID. Also rename the file `84-dis-abusers.conf.disabled` in `logstash/conf.d` to `84-dis-abusers.conf`.
+Optional step to create a dictionary file from the dissarm.net data (https://cablelabs.github.io/ddos-info-sharing/): uncomment out the `get-dissarm-ips.py` line in the `tattle_tale_shadow.sh` cron.daily script and then add in the API key and Org ID. Also rename the file `84-dis-abusers.conf.disabled` in `logstash/conf.d` to `84-dis-abusers.conf`.
 
 FYI, you can use this command to get the interfaces, interface descriptions, and interface SNMP index numbers out of the Arbor Sightline `shell`: `sqlite3 /base/data/files/interface.db ".headers on" ".mode csv" "SELECT * FROM interfaces;" > /base/data/files/interfaces_classification.csv`  This can then be used to generate the `ifName.yml` file instead of using `tattle_snmp_poll.py`.
