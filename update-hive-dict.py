@@ -18,6 +18,9 @@ arg_parser.add_argument('--client-cert', "-cc", required=False, action='store', 
 arg_parser.add_argument('--ca-cert', "-ca", required=False, action='store', type=open,
                         help="the CA file for validating the server")
 arg_parser.add_argument("connect_uri", action='store', help="the uri for the server websocket")
+
+arg_parser.add_argument("--api-key", action='store', required=True, help="the API key for the server websocket")
+
 arg_parser.add_argument('--websocket-retry-interval', "-ri", required=False, action='store', type=int, default=30,
                         help="the retry interval for reopening a websocket after close/timeout (in seconds)")
 arg_parser.add_argument('--proxy-url', "-pu", required=False, action='store', type=str,
@@ -45,23 +48,15 @@ event_loop = None
 async def connect_client():
     global event_loop
     global websocket
-    # SSL context setup if client and CA certs are provided
-    if args.client_cert:
-        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-        ssl_context.load_cert_chain(args.client_cert.name)
-        ssl_context.load_verify_locations(cafile=args.ca_cert.name)
-        ssl_context.verify_mode = ssl.VerifyMode.CERT_REQUIRED
-        ssl_context.check_hostname = False
-    else:
-        ssl_context = None
-
     try:
         # Proxy setup if specified
         if args.proxy_url:
             proxy = Proxy.from_url(args.proxy_url)
-            ws_context = proxy_connect(args.connect_uri, ssl=ssl_context, proxy=proxy)
+            ws_context = proxy_connect(args.connect_uri, proxy=proxy, 
+                                       extra_headers={"X-API-Key": args.api_key})
         else:
-            ws_context = websockets.connect(args.connect_uri, ssl=ssl_context, timeout=10)
+            ws_context = websockets.connect(args.connect_uri, timeout=10,
+                                            extra_headers={"X-API-Key": args.api_key})
     except Exception as Ex:
         logging.error(f"Error during connection setup: {Ex}")
         exit(-1)
@@ -78,9 +73,9 @@ async def connect_client():
                     logging.debug(f"Received message: {message}")
                     process_hive_message(message)
         except ConnectionClosed:
-            logging.warning("WebSocket connection closed, retrying...")
+            logging.warning("WebSocket connection closed, retrying...", exc_info=True)
         except Exception as Ex:
-            logging.error(f"Error during message handling: {Ex}")
+            logging.error(f"Error during message handling: {Ex}", exc_info=True)
         finally:
             await asyncio.sleep(args.websocket_retry_interval)
 
@@ -92,7 +87,7 @@ def process_hive_message(message):
         if message_type in ['HIVE:ATTACK_START', 'HIVE:ATTACK_END']:
             process_hive_attack_message(message_json['message'])
     except Exception as Ex:
-        logging.error(f"Error processing message: {Ex}")
+        logging.error(f"Error processing message: {Ex}", exc_info=True)
 
 def process_hive_attack_message(hive_message):
     try:
@@ -125,7 +120,7 @@ def process_hive_attack_message(hive_message):
         with open(output_file_path, 'w') as file:
             file.write(yaml_content)
     except Exception as Ex:
-        logging.error(f"Error processing attack message: {Ex}")
+        logging.error(f"Error processing attack message: {Ex}", exc_info=True)
 
 # Clear out the file of old entries when starting up
 def clear_output_file():
